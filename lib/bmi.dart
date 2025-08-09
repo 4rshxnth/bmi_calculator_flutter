@@ -11,6 +11,7 @@ class _CalculatorState extends State<Calculator> {
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
   String result = '';
+
   void calc() {
     double height = double.parse(heightController.text) / 100;
     double weight = double.parse(weightController.text);
@@ -26,98 +27,108 @@ class _CalculatorState extends State<Calculator> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.yellow, Colors.orange],
+            colors: [Color(0xFF4facfe), Color(0xFF00f2fe)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Column(
-          children: [
-            SizedBox(height: 80),
-            Text(
-              'BMI Calculator',
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: 20),
-            SizedBox(
-              height: 350,
-              width: 350,
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 30),
-                      TextField(
-                        controller: heightController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          fillColor: Colors.grey[300],
-                          filled: true,
-                          prefixIcon: Icon(Icons.height),
-                          border: OutlineInputBorder(),
-                          labelText: 'Height (cm)',
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      TextField(
-                        controller: weightController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          fillColor: Colors.grey[300],
-                          filled: true,
-                          prefixIcon: Icon(Icons.monitor_weight),
-                          border: OutlineInputBorder(),
-                          labelText: 'Weight (kg)',
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Container(
-                        height: 55,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Colors.yellow, Colors.orange],
+        child: SafeArea(
+          child: Center(
+            // Centers the whole block vertically & horizontally
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'BMI Calculator',
+                  style: TextStyle(
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: 350,
+                  child: Card(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextField(
+                            controller: heightController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              fillColor: Colors.grey[300],
+                              filled: true,
+                              prefixIcon: const Icon(Icons.height),
+                              border: const OutlineInputBorder(),
+                              labelText: 'Height (cm)',
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: TextButton(
-                            onPressed: () {
-                              calc();
-                            },
-                            child: Text(
-                              'Calculate',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
+                          const SizedBox(height: 15),
+                          TextField(
+                            controller: weightController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              fillColor: Colors.grey[300],
+                              filled: true,
+                              prefixIcon: const Icon(Icons.monitor_weight),
+                              border: const OutlineInputBorder(),
+                              labelText: 'Weight (kg)',
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          SizedBox(
+                            height: 50,
+                            width: double.infinity,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFF4facfe),
+                                    Color(0xFF00f2fe),
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: TextButton(
+                                onPressed: calc,
+                                child: const Text(
+                                  'Calculate',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                          const SizedBox(height: 20),
+                          Text(
+                            result,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 30),
-                      Text(
-                        result,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
